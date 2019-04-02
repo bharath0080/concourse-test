@@ -1,0 +1,72 @@
+groups: []
+resources:
+- name: docker-version-tag
+  type: semver
+  source:
+    branch: master
+    commit_message: Bumped %file% to %version%
+    depth: 10
+    driver: git
+    file: docker-auto-version-tag
+    initial_version: 0.0.0
+    password: Bh@rath008
+    uri: https://github.com/bharath0080/concourse-test.git
+    username: bharath0080
+- name: concourse-test
+  type: git
+  source:
+    branch: master
+    password: Bh@rath008
+    uri: https://github.com/bharath0080/concourse-test.git
+    username: bharath0080
+- name: atlas-dh-automation
+  type: docker-image
+  source:
+    password: Bh@rath008
+    repository: bharath2012/deploy-base
+    username: bharath2012
+resource_types: []
+jobs:
+- name: build-and-push-docker-image
+  plan:
+  - get: concourse-test
+    params:
+      depth: 10
+  - get: docker-version-tag
+    params:
+      bump: patch
+  - put: atlas-dh-automation
+    params:
+      build: ./concourse-test
+      tag_file: ./docker-version-tag/version
+    on_success:
+      put: docker-version-tag
+      params:
+        file: ./docker-version-tag/version
+- name: run-script-in-built-image
+  plan:
+  - get: concourse-test
+    passed:
+    - build-and-push-docker-image
+    params:
+      depth: 10
+  - get: docker-version-tag
+    passed:
+    - build-and-push-docker-image
+  - get: atlas-dh-automation
+    passed:
+    - build-and-push-docker-image
+    trigger: true
+  - task: run-script
+    config:
+      platform: linux
+      run:
+        path: sh
+        args:
+        - -ec
+        - |
+          ./concourse-test/task-test-script.sh
+          printf "\n\n\e[95mDockerfile source repo: %s\e[39m\n" "${SRC_REPO}"
+          printf "\n\n\e[93mExecution time: %s\e[39m\n" "$(date)"
+          printf "\n\n\e[96mImage version: %s\e[39m\n" "$(cat ./docker-version-tag/version)"
+    image: atlas-dh-automation
