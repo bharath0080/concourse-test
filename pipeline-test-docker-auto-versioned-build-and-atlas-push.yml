@@ -23,7 +23,7 @@ resources:
   type: docker-image
   source:
     password: Bh@rath008
-    repository: dh_automation/deploy-base
+    repository: bharath2012/deploy-base
     username: bharath2012
 resource_types: []
 jobs:
@@ -69,7 +69,4 @@ jobs:
           printf "\n\n\e[95mDockerfile source repo: %s\e[39m\n" "${SRC_REPO}"
           printf "\n\n\e[93mExecution time: %s\e[39m\n" "$(date)"
           printf "\n\n\e[96mImage version: %s\e[39m\n" "$(cat ./docker-version-tag/version)"
-      inputs:
-      - name: concourse-test
-      - name: docker-version-tag
     image: atlas-dh-automation
