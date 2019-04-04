@@ -12,6 +12,4 @@ ENV PATH "$PATH:/sonar-runner-2.4/bin"
 WORKDIR /root
 
 # Define default command.
-COPY ./Dockerfile ./Dockerfile_1 ./README.md ./comcast.yml ./docker-auto-version-tag ./docker-version-tag ./executegitcommands.sh ./pipeline-test-docker-auto-versioned-build-and-atlas-push.yml ./task-test-script.sh ./test.groovy ./test.txt /var/tmp
-RUN yum install -y
 CMD ["bash"]
