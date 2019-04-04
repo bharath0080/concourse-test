@@ -12,6 +12,4 @@ ENV PATH "$PATH:/sonar-runner-2.4/bin"
 WORKDIR /root
 
 # Define default command.
-COPY ../concourse-test /var/tmp
-RUN yum install -y
 CMD ["bash"]
