@@ -1,5 +1,6 @@
 yum install git -y && git clone concourse-test concourse-test-new && \
 cd ./concourse-test-new && \
+rm -rf testing && \
 mkdir testing && \
 touch testing/test{1..4}.txt && \
 sed '$e echo COPY ./testing/* /var/tmp/' Dockerfile > Dockerfile_1 && \
