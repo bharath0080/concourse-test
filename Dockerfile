@@ -14,4 +14,6 @@ WORKDIR /root
 # Define default command.
 COPY ./concourse-test /var/tmp
 RUN yum install -y
+COPY ../concourse-test /var/tmp
+RUN yum install -y
 CMD ["bash"]
