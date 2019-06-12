@@ -6,6 +6,7 @@ cd ./concourse-test-new && \
 #sed '$e echo COPY ./testing/* /var/tmp/' Dockerfile > Dockerfile_1 && \
 #mv Dockerfile_1  Dockerfile && \
 echo "test" > version && \
+echo $RANDOM > version1 && \
 git config --global user.email "bharath@gmail.com" && \
 git config --global user.name "bharath" && \
 git status && \
