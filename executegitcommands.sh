@@ -5,7 +5,7 @@ cd ./concourse-test-new && \
 #touch testing/test{1..4}.txt && \
 #sed '$e echo COPY ./testing/* /var/tmp/' Dockerfile > Dockerfile_1 && \
 #mv Dockerfile_1  Dockerfile && \
-echo "test" >> version && \
+echo "test" > version && \
 git config --global user.email "bharath@gmail.com" && \
 git config --global user.name "bharath" && \
 git status && \
